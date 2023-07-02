@@ -8,7 +8,7 @@ use nom::{
     IResult,
 };
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Move<'s> {
     pub san: &'s str,
     pub comment: Option<&'s str>,
@@ -22,7 +22,6 @@ impl<'s> Move<'s> {
     }
 
     fn parse(s: &'s str) -> IResult<&str, Self> {
-        println!(r#""{s}""#);
         let (s, (san, _, comment)) = preceded(
             tuple((multispace0, opt(Self::move_num), multispace0)),
             tuple((is_not(" "), space1, opt(Self::comment))),

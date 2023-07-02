@@ -92,7 +92,7 @@ impl<'s> PgnGameHeader<'s> {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PgnGameResult {
     WhiteWin,
     BlackWin,
