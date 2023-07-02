@@ -1,7 +1,7 @@
 use nom::{
     branch::alt,
     bytes::complete::{is_not, tag},
-    character::complete::{char, digit1, multispace0, newline, space1},
+    character::complete::{char, digit1, multispace0, newline, space1, multispace1},
     combinator::{opt, value, peek},
     multi::{many0, many_till},
     sequence::{delimited, preceded, terminated, tuple},
@@ -24,7 +24,7 @@ impl<'s> Move<'s> {
     fn parse(s: &'s str) -> IResult<&str, Self> {
         let (s, (san, _, comment)) = preceded(
             tuple((multispace0, opt(Self::move_num), multispace0)),
-            tuple((is_not(" "), space1, opt(Self::comment))),
+            tuple((is_not(" \n"), multispace1, opt(Self::comment))),
         )(s)?;
 
         Ok((s, Self { san, comment }))
